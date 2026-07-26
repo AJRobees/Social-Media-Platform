@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+</head>
+<style>
+    *{
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+
+    .page-title{
+        position: inherit;
+        font-size: xx-large;
+        justify-content: left;
+        padding: 0% 1%;
+    }
+    
+    .profile-container{
+        border:steelblue ;
+        border-style:solid;
+        box-sizing: border-box;
+        position:inherit;
+        font-size: large;
+        padding: 0% 10%;
+        margin-top: 10px;
+    }
+
+    .home-page{
+        position:inherit;
+        border: steelblue;
+        border-style: ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 0% 0% 2%;
+        padding: 3px 3px 3px 3px;
+    }
+
+    .logout-option{
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 1%;
+        padding: 3px 3px 3px 3px;
+    }
+
+    .edit-profile{
+        margin: 5% 1%;
+        padding: 3px 3px 3px 3px;
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+    }
+
+    .new-post{
+        position:inherit;
+        padding: 3px 3px 3px 3px;
+        border:steelblue ;
+        border-style:ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+    }
+
+    .header{
+        background-color: rgb(32, 38, 39);
+        border-style:hidden;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 1%;
+    }
+
+
+</style>
+
+
+
+<body>
+    <h1 class="page-title" id="title">User Profile</h1>
+    <div class="header">
+        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="edit-profile" id="edit-profile"><a href="{% url 'edit_profile' %}" >Edit</a></span>
+        <span class="new-post" id="new-post"><a href="{% url 'posts' %}" >Post</a></span>
+        <span class="logout-option" id="logout-option"><a href="{% url 'logout' %}">Logout</a></span>
+    </div>
+    
+    {% block content %}
+
+        <div class="profile-container">
+            <h2>Welcome to your profile, {{ current_user.username }}!</h2>
+            
+                <div class="profile-details">
+                    <p><strong>Profile Picture :</strong>
+                    <figure>
+                        <img src="{{ current_user.profile.profile_picture.url }}" alt="Profile Picture"> </p>
+                    </figure>
+                    <p><strong>Username :</strong> {{current_user.username}} </p>
+                    <p><strong>Is Private :</strong> {{current_user.profile.is_private}} </p>
+                    <p><strong>Email :</strong> {{current_user.email}} </p>
+                    <p><strong>Bio :</strong> {{current_user.profile.bio}} </p>
+                    <p><strong>Gender :</strong> {{current_user.profile.gender}} </p>
+                    <p><strong>Date of Birth :</strong> {{current_user.profile.date_of_birth}} </p>
+                    <p><strong>Phone number :</strong> {{current_user.profile.phone_number}} </p>
+                    <p><strong>Website :</strong> {{current_user.profile.website}} </p>
+                    <p><strong>Location :</strong> {{current_user.profile.location}} </p>
+                    
+                </div>
+        </div>
+    {% endblock %}
+
+</body>
+</html>

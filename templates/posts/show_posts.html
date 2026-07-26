@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+</head>
+<link rel="stylesheet" href="{% static 'header.css' %}">
+<link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+<style>
+
+    .posts-container{
+        border:steelblue ;
+        border-style:solid;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 0% 10%;
+        margin-top: 10px;
+    }
+
+    .search-pg{
+        padding: 3px 3px 3px 3px;
+        margin-left: 1%;
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+    }
+
+    .feed-detail{
+        border:rgb(2, 2, 2) ;
+        border-style:solid;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 0% 3%;
+        margin-top: 10px;
+    }
+
+    figure {
+        align-items: center;
+        image-resolution: inherit ;
+        max-width: 220px;
+        max-height: 250px;
+    }
+    
+    .profile-pic {
+        box-sizing: content-box;
+        border: 2px solid slategrey ;
+        border-radius: 100%;
+        align-items: center;
+        image-resolution: inherit ;
+        max-width: 120px;
+        max-height: 150px;
+    }
+
+    .edit-btn,.del-btn{
+        margin-left: 15% ;
+        font-size: medium;
+    }
+
+</style>
+
+<body>
+    <h1 class="page-title">Posts</h1>
+    <div class="header">
+        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="profile-page" id="edit-profile"><a href="{% url 'profile' %}" >Profile</a></span>
+        <span class="new-post" id="new-post"><a href="{% url 'new_post' %}" >➕ Post</a></span>
+        <span class="search-pg" id="search-pg"><a >Search</a></span>
+        <span class="logout-option" id="logout-option"><a href="{% url 'logout' %}">Logout</a></span>
+    </div>
+
+    <div class="posts-container" >
+        {% for post in posts %}
+            <div class="feed-detail">
+                
+                <p><img class="profile-pic" src="{{ post.user.profile.profile_picture.url }}" alt="Profile pictures" ></p>
+                <p><strong>Username :</strong> {{post.user.username}}
+                {% if request.user == post.user %}
+                    <button class="edit-btn" type="button"><a class="edit-page" href="{% url 'edit' post.id %}">Edit</a></button>
+                    <button class="del-btn" type="button"><a role="button" class="del-page" href="{% url 'delete' post.id %}">Delete</a></button>
+                {% endif %}</p>
+                {% if post.title %}
+                    <strong>Title :</strong> {{post.title}}
+                {% endif %}
+
+                {% if post.post_image %}
+                    <p><strong>Post image :</strong>
+                    <figure>
+                        <img src="{{ post.post_image.url }}" alt="Posts"> </p>
+                    </figure>
+                {% endif %}
+
+                <p><strong>Body :</strong> {{post.post}} </p>
+                <p><strong>Created_on :</strong> {{post.created_on}} </p>
+
+                {% if post.is_edited %}
+                    <p><strong>Edited_on:</strong> {{post.edited_on}} </p>
+                {% endif %}
+
+
+            </div>
+        {% endfor %}
+        
+    </div>
+
+</body>
+</html>

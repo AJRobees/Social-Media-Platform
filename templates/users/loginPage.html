@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}         
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="login-card">
+    <h2>Welcome</h2>
+    <p class="subtitle">Login to your account</p>
+
+    <form id="loginForm" method="post" action="">
+      {% csrf_token %}
+
+      <label for="username">Username</label>
+      <input type="username" id="username" name="username" placeholder="Enter your username" required />
+
+      <label for="password">Password</label>
+      <div class="password-box">
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <button type="button" id="togglePassword">Show</button>
+      </div>
+
+      <div class="options">
+        <label><input type="checkbox" name="remember" /> Remember me</label>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+
+      <span class="sign-in-link"><a href="{% url 'register' %}"> Sign-in</a></span>
+
+      <div id="message" class="message"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const messageBox = document.getElementById("message");
+
+    togglePassword.addEventListener("click", function () {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.textContent = isPassword ? "Hide" : "Show";
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete</title>
+</head>
+<link rel="stylesheet" href="{% static 'header.css' %}">
+<link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+<style>
+
+    .post-container{
+        border:steelblue ;
+        border-style:solid;
+        box-sizing: content-box;
+        position:inherit;
+        padding: 0% 10%;
+        margin-top: 10px;
+    }
+
+    .post-detail{
+        border:rgb(2, 2, 2) ;
+        border-style:solid;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 0% 3%;
+        margin: 10px;
+    }
+
+    figure {
+        align-items: center;
+        image-resolution: inherit ;
+        max-width: 220px;
+        max-height: 250px;
+    }
+    
+    .profile-pic {
+        box-sizing: content-box;
+        border: 2px solid slategrey ;
+        border-radius: 100%;
+        align-items: center;
+        image-resolution: inherit ;
+        max-width: 120px;
+        max-height: 150px;
+    }
+
+    .del-btn{
+        margin: 3% ;
+        font-size: medium;
+    }
+
+</style>
+
+<body>
+    <h1 class="page-title">Deletion</h1>
+    <div class="header">
+        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="show-post" id="edit-profile"><a href="{% url 'posts' %}" >🔙Back</a></span>
+    </div>
+
+    <div class="post-container" >
+            <div class="post-detail">
+                
+                <form class="confirm-delete" method="post" action="{% url 'delete' post.id %}" onsubmit="return confirmAction(event)">
+                    {% csrf_token %}
+                    <p><img class="profile-pic" src="{{ post.user.profile.profile_picture.url }}" alt="Profile pictures" ></p>
+                    <p><strong>Username :</strong> {{post.user.username}}</p>
+
+                    {% if post.title %}
+                        <strong>Title :</strong> {{post.title}}
+                    {% endif %}
+
+                    {% if post.post_image %}
+                        <p><strong>Post image :</strong>
+                        <figure>
+                            <img src="{{ post.post_image.url }}" alt="Posts"> </p>
+                        </figure>
+                    {% endif %}
+
+                    <p><strong>Body :</strong> {{post.post}} </p>
+                    <p><strong>Created_on :</strong> {{post.created_on}} </p>
+
+                    {% if post.is_edited %}
+                        <p><strong>Edited_on:</strong> {{post.edited_on}} </p>
+                    {% endif %}
+
+                    <button class="del-btn" type="submit">Delete</button>
+                </form>
+
+            </div>
+        
+    </div>
+    <script>
+        function confirmAction(event) {
+
+            // Displays the browser's built-in confirmation dialog
+            let decide = confirm(" Are you sure? Confirm deletion.")
+
+            // If user clicks 'Cancel', stop the form from submitting to Django
+            if (!decide) {
+                event.preventDefault();
+                return false;
+            }
+            return true;
+        }
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<link rel="stylesheet" href="{% static 'header.css' %}">
+<link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+<style>
+    *{
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .page-title{
+        position: inherit;
+        font-size: xx-large;
+        justify-content: left;
+        padding: 0% 1%;
+    }
+
+    h3{
+        position: inherit;
+        font-size: x-large;
+        padding: 0% 3%;
+    }
+
+    .submit-btn{
+        font-size: large;
+        margin-left: 5% ;
+    }
+
+    .editing-panel{
+        border: 3px solid slategrey;
+        padding: 0% 5%;
+        font-size: large;
+        margin: 0% 5% ;
+    }
+
+
+ 
+</style>
+
+<body>
+
+    <h1 class="page-title">Edit Post:</h1>
+    <div class="header">
+        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="show-post" id="show-post"><a href="{% url 'posts' %}" >🔙Back</a></span>
+      
+    </div>
+    
+    <div class="post-panel" >
+        <h3> Editing Post: </h3>
+
+        <form class="editing-panel" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <p><strong for="title">Title :</strong>
+            <input name="title" id="title" type="text" maxlength="200" value="{{post.title}}" ></p>
+
+            <strong for="post">Content *:</strong>
+            <p><textarea name="post" id="post" type="text" maxlength="500" rows="7" cols="50"
+                placeholder="500 charector only allowed." value="{{post.post}}">{{post.post}}</textarea></p>
+            
+            <p><strong for="post_image">Image:</strong>
+                {% if post.post_image %}
+                    <figure>
+                        <img src="{{ post.post_image.url }}" alt="Posts">
+                    </figure>
+                {% endif %}</p>
+
+            <input name="post_image" id="post_image" type="file" maxlength="255" accept=".png, .jpeg, .jpg">
+            
+            <p><button type="submit" class="submit-btn">Post</button></p>
+
+        </form>
+    </div>
+
+</body>
+</html>

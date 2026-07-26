@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    
+    <link rel="stylesheet" href="{% static 'header.css' %}">
+</head>
+<style >
+    
+    *{
+
+        font-family:'Times New Roman', Times, serif;
+        
+    }
+
+    .home-titles{
+        position: inherit;
+        font-size: xx-large;
+        justify-content: left;
+        padding: 0% 2%;
+    }
+
+    .home-content{
+        border:steelblue ;
+        border-style:solid;
+        box-sizing: border-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 8%;
+        margin-top: 10px;
+    }
+   
+    .home-page{
+        position:inherit;
+        border: steelblue;
+        border-style: ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 1%;
+        margin-left: 2% ;
+    }
+
+    .profile-page{
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        padding: top=5% right=2%;
+        margin-left: 2% ;
+        
+    }
+
+    .logout-option{
+        position:inherit;
+        border: steelblue;
+        border-style: ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 1%;
+    }
+
+    .header{
+        background-color: rgb(32, 38, 39);
+        border-style:hidden;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 1%;
+    }
+
+
+</style>
+
+    
+<body>
+    <h1 class="home-title">Home {{user.username}}:</h1>
+    <div class="header">
+        <span class="profile-page"><a href="{% url 'profile' %}">Profile</a></span>
+        <span class="logout-option"><a href="{% url 'logout' %}">Logout</a></span>
+    </div>
+    <div class="home-content">
+        <p>Body of the Content.
+            {% block post_feed %}
+            <h3> Here the posts feed will come.</h3>
+            {% endblock %}
+        </p>
+    </div>
+</body>
+</html>

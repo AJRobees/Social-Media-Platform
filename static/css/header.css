@@ -1,0 +1,87 @@
+*{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.page-title{
+    position: inherit;
+    font-size: xx-large;
+    justify-content: left;
+    padding: 0% 1%;
+}
+
+.show-post{
+    position:inherit;
+    padding: 3px 3px 3px 3px;
+    border:steelblue ;
+    border-style:ridge;
+    box-shadow: #414040;
+    background-color: lightskyblue;
+    margin: 5% 1%;
+}
+
+.home-page{
+    padding: 3px 3px 3px 3px;
+    position:inherit;
+    border: steelblue;
+    border-style: ridge;
+    box-sizing: border-box;
+    box-shadow: #414040;
+    font-size:large;
+    background-color: lightskyblue;
+    margin: 5% 1% 0% 1%;
+}
+
+.logout-option{
+    padding: 3px 3px 3px 3px;
+    position:inherit;
+    border: steelblue;
+    border-style: ridge;
+    box-sizing: border-box;
+    box-shadow: #414040;
+    font-size:large;
+    background-color: lightskyblue;
+    margin: 5% 1%;
+}
+
+.profile-page{
+    margin: 5% 1%;
+    padding: 3px 3px 3px 3px;
+    position:inherit;
+    border:steelblue ;
+    border-style:ridge;
+    box-sizing: border-box;
+    box-shadow: #414040;
+    font-size:large;
+    background-color: lightskyblue;
+}
+
+.new-post{
+    padding: 3px 3px 3px 3px;
+    position:inherit;
+    border:steelblue ;
+    border-style:ridge;
+    box-sizing: border-box;
+    box-shadow: #414040;
+    font-size:large;
+    background-color: lightskyblue;
+}
+
+.search-pg{
+    padding: 3px 3px 3px 3px;
+    position:inherit;
+    border:steelblue ;
+    border-style:ridge;
+    box-sizing: border-box;
+    box-shadow: #414040;
+    font-size:large;
+    background-color: lightskyblue;
+}
+
+.header{
+    background-color: rgb(32, 38, 39);
+    border-style:hidden;
+    box-sizing: content-box;
+    position:inherit;
+    font-size: large;
+    padding: 1% 1%;
+}       

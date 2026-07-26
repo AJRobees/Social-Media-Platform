@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New post</title>
+</head>
+<link rel="stylesheet" href="{% static 'header.css' %}">
+<link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+<style>
+    *{
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .page-title{
+        position: inherit;
+        font-size: xx-large;
+        padding: 0% 1%;
+    }
+
+    .create-post{
+        position:inherit;
+        padding: 3px 3px 3px 3px;
+        border:ridge steelblue ;
+        box-shadow: #414040;
+        background-color: lightskyblue;
+    }
+
+    .post-panel{
+        position:inherit;
+        box-sizing: border-box;
+        font-size: large;
+        margin: 0% 5% 10px;
+        margin-top: 10px;
+    }
+
+    
+    .submit-btn{
+        font-size: large;
+        margin-left:5% ;
+        margin-bottom: 10px;
+    }
+
+
+    .header{
+        background-color: rgb(32, 38, 39);
+        border-style:hidden;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 1%;
+    }
+
+</style>
+
+<body>
+
+    <h1 class="page-title">New Post:</h1>
+    <div class="header">
+        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="show-post" id="show-post"><a href="{% url 'posts' %}" >🔙Back</a></span>
+      
+    </div>
+    
+    
+    <p><h2> {{user.username}}'s' Post creation,</h2></p>
+
+    <form class="create-post" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="post-panel" >
+            <p><strong for="title">Title :</strong>
+            <input name="title" id="title" type="text" maxlength="200" ></p>
+
+            <p><strong for="post">Content *:</strong>
+            <input name="post" id="post" type="text" maxlength="500" required></p>
+            
+            <p><strong for="post_image">Image:</strong>
+            <input name="post_image" id="post_image" type="file" maxlength="255" accept=".png, .jpeg, .jpg"></p>
+
+            <button type="submit" class="submit-btn"> Post </button>
+        </div>
+
+    </form>
+
+
+</body>
+</html>

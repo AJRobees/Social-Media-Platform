@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<link rel="stylesheet" href="{% static 'headers.css' %}">
+<link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+
+<style>
+
+    .home-page{
+        position:inherit;
+        border: steelblue;
+        border-style: ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 1%;
+        margin-left: 2% ;
+    }
+
+    .logout-option{
+        position:inherit;
+        border: steelblue;
+        border-style: ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 1%;
+    }
+
+    .profile-page{
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-sizing: border-box;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        
+    }
+    .header{
+        background-color: rgb(32, 38, 39);
+        border-style:hidden;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 1%;
+    }       
+    .edit-layout{
+        border:steelblue ;
+        border-style:solid;
+        box-sizing: border-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 8%;
+        margin-top: 10px;
+    }
+
+
+    
+</style>
+<body>
+    <h1>Editing {{ current_user.username }}'s  profile,</h1>
+    <div class="header">
+        <span class="home-page" id="to-home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="logout-option" id="for-logout-option"><a href="{% url 'logout' %}">Logout</a></span>
+        <span class="profile-page"><a href="{% url 'profile' %}">  🔙 Back </a></span>
+    </div>
+
+    <form class="edit-profile" id="edit-profile" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="edit-layout" >
+            <p><strong for="profile_picture" >Profile picture: </strong>
+            <figure>
+                <img src="{{ current_user.profile.profile_picture.url }}" alt="Profile Picture">
+            </figure>
+            <input type="file" id="profile-picture" name="profile_picture" accept=".png, .jpeg, .jpg"/></p>
+
+            <p><strong for="username" >Username: </strong>
+                <input type="username" id="username" name="username" value="{{current_user.username}}"/>
+                <label for="is_private" > Is Private account <input type="checkbox" name="is_private" 
+                    value="true" /></label>
+            </p>
+
+            <p><strong for="email">Email: </strong>
+                <input type="email" id="email" name="email" value="{{current_user.email}}"/></p>
+            
+            <strong for="bio">Bio: </strong>
+            <p>
+                <textarea id="bio" name="bio" rows="7" cols="50" maxlength="255" 
+                    placeholder="255 charector only allowed.">{{current_user.profile.bio}}</textarea>
+            </p>
+
+            <p><strong for="date_of_birth">Date of Birth: </strong>
+                <input type="date" id="date_of_birth" name="date_of_birth" value="{{dob}}"/></p>
+            
+            <p><strong for="gender">Gender: </strong>
+                <p> M - Male, F - Female, O - Other, PNS - Prefer Not to Say</p>
+                <select type="text" id="gender" name="gender">
+                    <option value="{{current_user.profile.gender}}">{{current_user.profile.gender}}</option>
+
+                    <option value="M"> -M- </option>
+                    <option value="F"> -F- </option>
+                    <option value="O"> -O- </option>
+                    <option value="PNS"> PNS </option>
+                </select>
+            </p>
+            
+            <p><strong for="phone_number">Phone number: </strong>
+                <input type="tel" id="phone_number" name="phone_number" size="15" value="{{current_user.profile.phone_number}}" /></p>
+            
+            <p><strong for="location">Location: </strong>
+                <input type="text" id="location" name="location" value="{{current_user.profile.location}}" /></p>
+
+            <p><strong for="website">Website: </strong>
+                <input type="url" id="website" name="website" value="{{current_user.profile.website}}" /></p>
+            
+            <button class="save-btn" type="submit"> Save </button>
+            
+        </div>
+    </form>
+
+ 
+</body>
+</html>
+
+
+    

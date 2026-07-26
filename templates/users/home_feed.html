@@ -1,0 +1,121 @@
+{% extends "home.html" %}
+<link rel="headers" href="{% static 'css/headers.css' %}">
+<style>
+    *{
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .posts-title{
+        position: inherit;
+        font-size: xx-large;
+        justify-content: left;
+        padding: 0% 1%;
+    }
+
+    .new-post{
+        position:inherit;
+        padding: 3px 3px 3px 3px;
+        border:steelblue ;
+        border-style:ridge;
+        box-shadow: #414040;
+        background-color: lightskyblue;
+    }
+
+    .posts-container{
+        border:steelblue ;
+        border-style:solid;
+        box-sizing: border-box;
+        position:inherit;
+        font-size: large;
+        padding: 0% 10%;
+        margin-top: 10px;
+    }
+
+    .home-page{
+        position:inherit;
+        border: steelblue;
+        border-style: ridge;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 0% 0% 2%;
+        padding: 3px 3px 3px 3px;
+    }
+
+    .logout-option{
+        align-items: right;
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+        margin: 5% 1%;
+        padding: 3px 3px 3px 3px;
+    }
+
+    .profile-page{
+        margin: 5% 1%;
+        padding: 3px 3px 3px 3px;
+        position:inherit;
+        border:steelblue ;
+        border-style:ridge;
+        box-shadow: #414040;
+        font-size:large;
+        background-color: lightskyblue;
+    }
+
+    .header{
+        background-color: rgb(32, 38, 39);
+        border-style:hidden;
+        box-sizing: content-box;
+        position:inherit;
+        font-size: large;
+        padding: 1% 1%;
+    }
+
+</style>
+<body>
+    <h1 class="posts-title">Posts</h1>
+    <div class="header">
+        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="profile-page" id="edit-profile"><a href="{% url 'profile' %}" >Profile</a></span>
+        <span class="new-post" id="new-post"><a href="{% url 'new_post' %}" >➕ Post</a></span>
+        <span class="logout-option" id="logout-option"><a href="{% url 'logout' %}">Logout</a></span>
+    </div>
+
+    <div class="posts-container" >
+        {% block post_feed %}
+        {% for post in posts %}
+            <div class="feed-detail">
+            
+                <p><img src="{{ post.user.profile_picture.url }}" alt="Profile pictures" ></p>
+                
+                <p><strong>Username :</strong>{{post.user.username}}</p>
+                <strong>Title :</strong>{{post.title}}
+
+                {% if post.post_image == "" %}
+                    <p><strong>Post image :</strong>
+                    <figure>
+                        <img src="{{ post_image.url }}" alt="Posts"> </p>
+                    </figure>
+                {% else %}
+                    <p><strong>Post image :</strong> None</p>
+                {% endif %}
+
+                <p><strong>Body :</strong> {{post.post}} </p>
+                <p><strong>Created_on :</strong> {{post.created_on}} </p>
+
+                {% if post.created_on == post.edited_on %}
+                    <p><strong>Edited_on :</strong> None </p>
+                {% else %}
+                    <p><strong>Edited_on :</strong> {{post.edited_on}} </p>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>
