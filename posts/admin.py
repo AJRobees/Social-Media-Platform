@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import UserPost
-# Register your models here.
+
+# Registers the UserPost in the admin
 
 admin.site.register(UserPost)

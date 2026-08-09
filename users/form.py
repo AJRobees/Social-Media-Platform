@@ -1,15 +1,15 @@
 from datetime import date
-from django.contrib.auth import forms
 from django.contrib.auth.models import User
+from django.contrib.auth import forms
 from django.forms.models import ModelForm
 
 from django.core.exceptions import ValidationError
 
-from django.contrib import messages
-
 from .models import Profile
 
-
+'''     All forms that related to User and Profile models. Each form class have the fields that only need to 
+get the data from user. The automated fields are handled by the django itself without interaction with
+user. '''
 
 class RegisterForm(forms.UserCreationForm):
     class Meta:
@@ -21,18 +21,20 @@ class LoginForm(forms.AuthenticationForm):
         fields = ["username","password"]
 
 class UserUpdateForm(ModelForm):
-
     class Meta:
         model = User
         fields = ["username","email"]
 
 class ProfileUpdateForm(ModelForm):
-
     class Meta:
         model = Profile
         fields = "__all__"
-        exclude = ["user"]
+        exclude = ["user"]          # 'excule' mean except this fields
 
+    # In this "ProfileUpdateForm", it validates the date of birth 
+        # DoB shouldn't be today,
+        # Age must be below 100
+        # Underage 17 is not allowed.
     def clean_date_of_birth(self):
         dob = self.cleaned_data.get('date_of_birth')
         today = date.today()
@@ -60,7 +62,7 @@ class ProfileUpdateForm(ModelForm):
 
 
 class PasswordUpdateForm(forms.PasswordChangeForm):
-
+    # It get the password, authenticate it and validate it before pass to save. 
     class Meta:
         model = User
         fields = ["password"]

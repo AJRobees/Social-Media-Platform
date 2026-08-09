@@ -8,7 +8,14 @@
 </head>
 <link rel="stylesheet" href="{% static 'header.css' %}">
 <link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+
+<!-- CSS block to change the apprearance of the page. -->
 <style>
+
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
 
     .posts-container{
         border:steelblue ;
@@ -20,24 +27,25 @@
         margin-top: 10px;
     }
 
-    .search-pg{
-        padding: 3px 3px 3px 3px;
-        margin-left: 1%;
-        position:inherit;
-        border:steelblue ;
-        border-style:ridge;
-        box-sizing: border-box;
-        box-shadow: #414040;
-        font-size:large;
-        background-color: lightskyblue;
-    }
-
     .feed-detail{
-        border:rgb(2, 2, 2) ;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border:black;
         border-style:solid;
         box-sizing: content-box;
-        position:inherit;
         font-size: large;
+        padding: 0% 3%;
+        margin-top: 10px;
+    }
+    
+    .display-post{
+        align-content: left;
+        padding: 0% 3%;
+        margin-top: 10px;
+    }
+
+    .comment-area{
+        align-content: right;
         padding: 0% 3%;
         margin-top: 10px;
     }
@@ -48,7 +56,7 @@
         max-width: 220px;
         max-height: 250px;
     }
-    
+
     .profile-pic {
         box-sizing: content-box;
         border: 2px solid slategrey ;
@@ -60,52 +68,150 @@
     }
 
     .edit-btn,.del-btn{
-        margin-left: 15% ;
+        margin-left: 5% ;
         font-size: medium;
+    }
+    .comment-submit{
+        margin-left: 5% ;
+        font-size: medium;
+        border-radius: 50%;
+    }
+
+    .message-container{
+        position: inherit;
+        padding: 0% 3%;
+        margin-top: 10px;
+        box-sizing: content-box;
+        border: 2px double cadetblue;
+        font-size: x-large;
     }
 
 </style>
 
+
 <body>
     <h1 class="page-title">Posts</h1>
+    
+    <!-- These are for travel between pages.-->
     <div class="header">
-        <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
+        <span class="home-page" id="home-page"><a  href="{% url 'home' %}" >Home</a></span>
         <span class="profile-page" id="edit-profile"><a href="{% url 'profile' %}" >Profile</a></span>
-        <span class="new-post" id="new-post"><a href="{% url 'new_post' %}" >➕ Post</a></span>
-        <span class="search-pg" id="search-pg"><a >Search</a></span>
+        <span class="new-post" id="new-post"><a href="{% url 'new_post' %}" > ➕ Post </a></span>
         <span class="logout-option" id="logout-option"><a href="{% url 'logout' %}">Logout</a></span>
     </div>
 
-    <div class="posts-container" >
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    
+
+     <!--'posts-container' have the details related to post, comments and likes.-->
+    <div class="posts-container"  >
         {% for post in posts %}
+
+        <!--  'posts-container' has the display type as Grid that allow the content to allign in left/right.
+          It is divided into two blocks, left side for the Post detail, likes and like count, Right side for 
+          comments section.
+          
+          Displaying the posts using the for loop in the reverse order, just like the social media like Instagram,
+          Facebook to arrange the recent posts at the top. -->
             <div class="feed-detail">
-                
-                <p><img class="profile-pic" src="{{ post.user.profile.profile_picture.url }}" alt="Profile pictures" ></p>
-                <p><strong>Username :</strong> {{post.user.username}}
-                {% if request.user == post.user %}
-                    <button class="edit-btn" type="button"><a class="edit-page" href="{% url 'edit' post.id %}">Edit</a></button>
-                    <button class="del-btn" type="button"><a role="button" class="del-page" href="{% url 'delete' post.id %}">Delete</a></button>
-                {% endif %}</p>
-                {% if post.title %}
-                    <strong>Title :</strong> {{post.title}}
-                {% endif %}
+                <div  class="display-post" id="display-post">
+                    <p><img class="profile-pic" src="{{ post.user.profile.profile_picture.url }}" alt="Profile pictures" ></p>
+                    <p><strong>Username :</strong> {{post.user.username}}
 
-                {% if post.post_image %}
-                    <p><strong>Post image :</strong>
-                    <figure>
-                        <img src="{{ post.post_image.url }}" alt="Posts"> </p>
-                    </figure>
-                {% endif %}
+                    <!--Validate the authentication of the post's ownership before display the buttons to edit/delete the post.--> 
+                    {% if request.user == post.user %}
+                        <button class="edit-btn" type="button"><a class="edit-page" href="{% url 'edit' post.id %}">Edit</a></button>
+                        <button class="del-btn" type="button"><a role="button" class="del-page" href="{% url 'delete' post.id %}">Delete</a></button>
+                    {% endif %}</p>
 
-                <p><strong>Body :</strong> {{post.post}} </p>
-                <p><strong>Created_on :</strong> {{post.created_on}} </p>
+                    <!-- Only display the Title/post_image when it's available-->
+                    {% if post.title %}
+                        <strong>Title :</strong> {{post.title}}
+                    {% endif %}
 
-                {% if post.is_edited %}
-                    <p><strong>Edited_on:</strong> {{post.edited_on}} </p>
-                {% endif %}
+                    {% if post.post_image %}
+                        <p><strong>Post image :</strong>
+                        <figure>
+                            <img src="{{ post.post_image.url }}" alt="Posts"> </p>
+                        </figure>
+                    {% endif %}
 
+                    <p><strong>Body :</strong> {{post.post}} </p>
+                    <p><strong>Created_on :</strong> {{post.created_on}} </p>
+
+                    <!-- 'is_edited' have the boolen value that validate is the post has been edited or not.
+                     display the 'is_edited' when it is edited. -->
+                    {% if post.is_edited %}
+                        <p><strong>Edited_on:</strong> {{post.edited_on}} </p>
+                    {% endif %}
+
+                    <!-- It used to show the like count, liked/not based on condition validation.-->
+                    <div class="option-panel">
+                        <form class="like-form" method="post" action="{% url 'likes' post.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <span> likes :  
+                            {% if post.total_likes %}
+                                {{ post.total_likes }}
+                            {% else %}
+                                 0 
+                            {% endif %}
+                        </span>
+
+                        {% if post.id in liked_posts_ids %}
+                            <p name="like" id="like" type="text" >
+                                <button class="like-submit" type="submit">❤️</button> <small> Post liked by you.</small> </p>
+
+                        {% else %}
+                            <p name="unlike" id="like" type="text" >
+                                <button class="like-submit" type="submit">🩶</button></p>
+                        
+                        {% endif %}
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Comment section and Comment input textarea -->
+                <div class="comment-area" id="comment-area">
+                    <form class="comment-form" method="post" action="{% url 'comments' post.id %}" enctype="multipart/form-data">
+                        <!-- Submits the comment upon clicking submit button -->
+                        {% csrf_token %}
+                        <h5> Comments:</h5>
+                        <p><textarea name="comment_text" id="comment-id" type="text" maxlength="500" rows="3" cols="40"
+                            placeholder="500 charector only allowed." required></textarea>
+                            <button class="comment-submit" type="submit">Submit</button></p>
+                    </form>
+
+                    <!-- Loop through every comment to display the comments one by one along with the created time as 'commented on:' 
+                     when the authenticated user holds the ownership of that comment, delete button allow the 
+                     user to delete the comment. -->
+                    {% for comment in post.comments.all %}
+                        <div class="single-comment">
+                            <p><strong>{{ comment.user.username }} : </strong>{{ comment.comment_text }}</p>
+                            {% if request.user == comment.user %}
+                            <small><button class="delcomment" type="button"><a name="delcomment" href="{% url 'delcomment' comment.id %}">delete</a>
+                            </button></small>
+                            {% endif %}
+                            <small>commented on : {{ comment.created_on }}</small>
+                        </div>
+                    {% empty %}
+                        <p> No comments yet.</p>
+                    {% endfor %}
+
+                </div>
 
             </div>
+
         {% endfor %}
         
     </div>

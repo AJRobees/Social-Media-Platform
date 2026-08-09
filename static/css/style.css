@@ -1,3 +1,4 @@
+/* CSS block to modify the apprearance of the register and login page. */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +15,7 @@ body {
     color: rgb(43, 41, 41);
 }
 
-.login-card{
+.login-card,.register-card{
     background-color: rgb(186, 195, 196);
     border-style:double;
     border-color: darkslateblue;
@@ -32,7 +33,7 @@ h2, p {
     padding-bottom: 3px;
 }
 
-.sign-in-link,login-btn{
+.sign-in-link,.login-btn{
     font-size: small;
     margin-left: 3%;
 }

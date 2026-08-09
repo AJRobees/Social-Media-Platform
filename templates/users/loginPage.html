@@ -7,14 +7,39 @@
     <title>Login Page</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
+
+<style>
+    
+    .message-container{
+        position: inherit;
+        padding: 0% 3%;
+        margin-top: 10px;
+        box-sizing: content-box;
+        border: 2px double cadetblue;
+        font-size: medium;
+    }
+</style>
+
 <body>
   <div class="login-card">
     <h2>Welcome</h2>
     <p class="subtitle">Login to your account</p>
+    
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
 
+    <!-- Login form  -->
     <form id="loginForm" method="post" action="">
       {% csrf_token %}
 
+      <!-- Get the username and password from the user to authenticate with the database  -->
       <label for="username">Username</label>
       <input type="username" id="username" name="username" placeholder="Enter your username" required />
 
@@ -24,10 +49,14 @@
         <button type="button" id="togglePassword">Show</button>
       </div>
 
+      <!--
+
       <div class="options">
         <label><input type="checkbox" name="remember" /> Remember me</label>
         <a href="#">Forgot password?</a>
       </div>
+
+      -->
 
       <button type="submit" class="login-btn">Login</button>
 
@@ -37,6 +66,7 @@
     </form>
   </div>
 
+  <!-- Javascript to show/hide the password  -->
   <script>
     const form = document.getElementById("loginForm");
     const passwordInput = document.getElementById("password");

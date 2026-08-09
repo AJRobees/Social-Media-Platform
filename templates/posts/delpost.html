@@ -8,7 +8,13 @@
 </head>
 <link rel="stylesheet" href="{% static 'header.css' %}">
 <link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+
+<!-- CSS block to change the apprearance of the page. -->
 <style>
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
 
     .post-container{
         border:steelblue ;
@@ -51,18 +57,40 @@
         font-size: medium;
     }
 
+    .message-container{
+        position: inherit;
+        padding: 0% 3%;
+        margin-top: 10px;
+        box-sizing: content-box;
+        border: 2px double cadetblue;
+        font-size: x-large;
+    }
 </style>
 
 <body>
     <h1 class="page-title">Deletion</h1>
+
+    <!-- These are for travel between pages.-->
     <div class="header">
         <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
         <span class="show-post" id="edit-profile"><a href="{% url 'posts' %}" >🔙Back</a></span>
     </div>
 
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    
     <div class="post-container" >
             <div class="post-detail">
                 
+                <!-- Display the post before deleting it that confirm the post want to delete. Asks for the 
+                 confirm from the browser's confirm function. -->
                 <form class="confirm-delete" method="post" action="{% url 'delete' post.id %}" onsubmit="return confirmAction(event)">
                     {% csrf_token %}
                     <p><img class="profile-pic" src="{{ post.user.profile.profile_picture.url }}" alt="Profile pictures" ></p>
@@ -92,6 +120,9 @@
             </div>
         
     </div>
+
+    <!-- It uses the browsers's built-in confirm function to get the confirmation from the user
+     before deleting the post.-->
     <script>
         function confirmAction(event) {
 

@@ -8,15 +8,17 @@
 </head>
 <link rel="stylesheet" href="{% static 'header.css' %}">
 <link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+
+<!-- CSS block to change the apprearance of the page. -->
 <style>
+
     *{
         font-family: 'Times New Roman', Times, serif;
     }
 
-    .page-title{
-        position: inherit;
-        font-size: xx-large;
-        padding: 0% 1%;
+    a{
+        text-decoration: none;
+        color: inherit;
     }
 
     .create-post{
@@ -42,20 +44,20 @@
         margin-bottom: 10px;
     }
 
-
-    .header{
-        background-color: rgb(32, 38, 39);
-        border-style:hidden;
+    .message-container{
+        position: inherit;
+        padding: 0% 3%;
+        margin-top: 10px;
         box-sizing: content-box;
-        position:inherit;
-        font-size: large;
-        padding: 1% 1%;
+        border: 2px double cadetblue;
+        font-size: x-large;
     }
 
 </style>
 
 <body>
 
+    <!-- These are for travel between pages.-->
     <h1 class="page-title">New Post:</h1>
     <div class="header">
         <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
@@ -63,8 +65,27 @@
       
     </div>
     
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
     
     <p><h2> {{user.username}}'s' Post creation,</h2></p>
+
+    <!-- "csrf_token" is an Django authentication method. 'Form' uses the fields that are need to get data
+    from the user, 'Content' or 'post' only the required field others are can be empty based on the 
+    user decision. 
+    Using 'multipart/form-data' as an encription type, each field bundled into a seperate packages for 
+    safe transport and that naturally divide the 'file' avoid to encrypt with 'text' type.
+
+    'for' and 'name' must be the same as the one stored in the database.
+    post_image is only allow the formats in the given types, other types are rejected.
+    'submit-btn' submit the data to the views. -->
 
     <form class="create-post" method="post" enctype="multipart/form-data">
         {% csrf_token %}

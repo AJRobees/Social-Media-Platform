@@ -1,3 +1,4 @@
+/* CSS style to modify the apprearance of the profile image and element layout. */
 figure {
   border: thin rgb(113, 106, 106) solid;
   display: flex;
@@ -6,6 +7,11 @@ figure {
   max-width: 220px;
   margin: 2% 3%;
   align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 img {
@@ -28,6 +34,16 @@ textarea {
   border-radius: 5px;
   border: 1px solid #252222;
   box-shadow: 1px 1px 1px #b1aeae;
+}
+
+.profile-pic {
+  box-sizing: content-box;
+  border: 2px solid slategrey ;
+  border-radius: 100%;
+  align-items: center;
+  image-resolution: inherit ;
+  max-width: 120px;
+  max-height: 150px;
 }
 
 label {

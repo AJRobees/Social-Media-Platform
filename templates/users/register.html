@@ -1,7 +1,77 @@
-<h2> Register</h2>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
+<style>
+    
+    .message-container{
+        position: inherit;
+        padding: 0% 3%;
+        margin-top: 10px;
+        box-sizing: content-box;
+        border: 2px double cadetblue;
+        font-size: medium;
+    }
+</style>
+
+<body>
+    <h2>Register user</h2>
+    
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    
+    <div class="register-card">
+
+        <!-- Registration form  -->
+        <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Register form collects the data from the user to create the new user if the 
+         information is valid.  -->
+        <label for="username">Username :</label>
+        <input type="username" id="username" name="username" placeholder="Enter your username" required />
+        
+        <p>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+
+        <label for="email">Email :
+        <input type="email" id="email" name="email" placeholder="Enter your Email" required /></label>
+    
+        
+        <div class="password-box">
+            <label for="password1">Password :</label>
+            <input type="password" id="password1" name="password1" placeholder="Enter your password" required />
+            </div>
+        <p>Your password can’t be too similar to your other personal information.</p>
+        <p>Your password must contain at least 8 characters.</p>
+        <p>Your password can’t be a commonly used password.</p>
+        <p>Your password can’t be entirely numeric.</p>
+
+        <div class="password-box">
+            <label for="password2">Confirm Password :</label>
+            <input type="password" id="password2" name="password2" placeholder="Enter your password" required />
+            
+        </div>
+        <button  type="submit">Register</button>
+            <span class="login-link"><a href="{% url 'login' %}"> Log-in</a></span>
+
+        </form>
+        
+    </div>
+    
+</body>
+</html>
+
+

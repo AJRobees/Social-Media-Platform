@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "posts.apps.PostsConfig",
     "friends",
-    "notifications",
-    "api"
 ]
 
 MIDDLEWARE = [
@@ -109,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'     # set time zone here
 
 USE_I18N = True
 
@@ -118,6 +116,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
+
+# By mentioning "STATICFILES_DIRS" as list, just update the list if want to add or remove access to the static folder
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [

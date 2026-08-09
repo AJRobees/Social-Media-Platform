@@ -9,9 +9,16 @@
 <link rel="stylesheet" href="{% static 'headers.css' %}">
 <link rel="stylesheet" href="{% static 'profile_layout.css' %}">
 
+<!-- CSS block to change the apprearance of the page. -->
 <style>
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
 
     .home-page{
+        text-decoration: none;
+        color: inherit;
         position:inherit;
         border: steelblue;
         border-style: ridge;
@@ -24,6 +31,8 @@
     }
 
     .logout-option{
+        text-decoration: none;
+        color: inherit;
         position:inherit;
         border: steelblue;
         border-style: ridge;
@@ -35,6 +44,8 @@
     }
 
     .profile-page{
+        text-decoration: none;
+        color: inherit;
         position:inherit;
         border:steelblue ;
         border-style:ridge;
@@ -62,17 +73,35 @@
         margin-top: 10px;
     }
 
-
-    
 </style>
+
 <body>
     <h1>Editing {{ current_user.username }}'s  profile,</h1>
+
+    <!-- These are for travel between pages.-->
     <div class="header">
         <span class="home-page" id="to-home-page"><a href="{% url 'home' %}" >Home</a></span>
         <span class="logout-option" id="for-logout-option"><a href="{% url 'logout' %}">Logout</a></span>
         <span class="profile-page"><a href="{% url 'profile' %}">  🔙 Back </a></span>
     </div>
 
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    
+    <!-- Its an custom edit_profile form that created from the User and Profile objects. When the post objects already have
+         an data then that has been set as value of that field, to ensure the unchanged data have to 
+         remain same as the previously saved.
+         
+         'is_private' object is an exception that require to set the each time opened the Edit profile.
+         
+         When submit button is clicked, it passes all the data to the view to save it in the database. -->
     <form class="edit-profile" id="edit-profile" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="edit-layout" >
@@ -102,6 +131,8 @@
             
             <p><strong for="gender">Gender: </strong>
                 <p> M - Male, F - Female, O - Other, PNS - Prefer Not to Say</p>
+
+                <!-- 'select' allows the user to select the option and 'option' lists the values in the option menu. -->
                 <select type="text" id="gender" name="gender">
                     <option value="{{current_user.profile.gender}}">{{current_user.profile.gender}}</option>
 
@@ -125,7 +156,6 @@
             
         </div>
     </form>
-
  
 </body>
 </html>

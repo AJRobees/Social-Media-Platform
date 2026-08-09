@@ -8,17 +8,15 @@
 </head>
 <link rel="stylesheet" href="{% static 'header.css' %}">
 <link rel="stylesheet" href="{% static 'profile_layout.css' %}">
+
+<!-- CSS block to change the apprearance of the page. -->
 <style>
-    *{
-        font-family: 'Times New Roman', Times, serif;
+
+    a{
+        text-decoration: none;
+        color: inherit;
     }
 
-    .page-title{
-        position: inherit;
-        font-size: xx-large;
-        justify-content: left;
-        padding: 0% 1%;
-    }
 
     h3{
         position: inherit;
@@ -37,23 +35,44 @@
         font-size: large;
         margin: 0% 5% ;
     }
-
-
  
+    .message-container{
+        position: inherit;
+        padding: 0% 3%;
+        margin-top: 10px;
+        box-sizing: content-box;
+        border: 2px double cadetblue;
+        font-size: x-large;
+    }
 </style>
 
 <body>
 
     <h1 class="page-title">Edit Post:</h1>
+
+    <!-- These are for travel between pages.-->
     <div class="header">
         <span class="home-page" id="home-page"><a href="{% url 'home' %}" >Home</a></span>
         <span class="show-post" id="show-post"><a href="{% url 'posts' %}" >🔙Back</a></span>
       
     </div>
     
+    <div class="message-container">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    
     <div class="post-panel" >
         <h3> Editing Post: </h3>
 
+        <!-- It's an custom edit_post form that created from the UserPost objects. When the post objects already have
+         an data then that has been set as value of that field, to ensure the unchanged data have to 
+         remain same as the previously saved. -->
         <form class="editing-panel" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
@@ -62,7 +81,7 @@
 
             <strong for="post">Content *:</strong>
             <p><textarea name="post" id="post" type="text" maxlength="500" rows="7" cols="50"
-                placeholder="500 charector only allowed." value="{{post.post}}">{{post.post}}</textarea></p>
+                placeholder="500 charector only allowed." value="{{post.post}}" required>{{post.post}}</textarea></p>
             
             <p><strong for="post_image">Image:</strong>
                 {% if post.post_image %}
